@@ -10,10 +10,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveSystem extends Subsystem {
-	CANTalon  frontLeftMotor = new CANTalon (2),  rearLeftMotor = new CANTalon(1), 
-			  frontRightMotor = new CANTalon(3),  rearRightMotor = new CANTalon(4); 
-
-new RobotDrive( frontLeftMotor,  rearLeftMotor,  frontRightMotor,  rearRightMotor );
+	CANTalon  frontLeftMotor = new CANTalon (2),  rearLeftMotor = new CANTalon(1), frontRightMotor = new CANTalon(3),  rearRightMotor = new CANTalon(4);
+	
+	RobotDrive myRobot = new RobotDrive( frontLeftMotor,  rearLeftMotor,  frontRightMotor,  rearRightMotor );
 
     // Put methods forthod controlling this subsystem
     // here. Call these from Commands.
