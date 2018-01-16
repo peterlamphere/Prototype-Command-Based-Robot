@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		chooser.addDefault("Forward 2 sec", new DriveForward(2.0));
+		chooser.addDefault("Forward 2 sec", new DriveForward(0.5));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
 	}
