@@ -12,11 +12,11 @@ public class DriveForward extends Command {
 	Timer timer = new Timer();
 	double time = 0;
 	
-    public DriveForward(double _time) {
+    public DriveForward(double _feet) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);\
     	requires(Robot.driveSubsystem);
-    	time = _time;
+    	time = _feet/Robot.driveSubsystem.getfeetPerSecond();
     	
     }
 

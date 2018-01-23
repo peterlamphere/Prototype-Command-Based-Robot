@@ -1,6 +1,6 @@
 package org.usfirst.frc.team6873.robot.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -9,11 +9,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 	
 
 /**
- *
- */
+ * */
 public class DriveSystem extends Subsystem {
-	static double defaultSpeed = 0.5;
-	CANTalon  frontLeftMotor = new CANTalon (2),  rearLeftMotor = new CANTalon(1), frontRightMotor = new CANTalon(3),  rearRightMotor = new CANTalon(4);
+	static double defaultSpeed = 0.55;
+	static double feetPerSecond = 7;
+	public double getfeetPerSecond() { return feetPerSecond; }
+
+	static double degreesPerSecond = 230;
+	public double getdegreesPerSecond() { return degreesPerSecond; }
+	
+	WPI_TalonSRX  frontLeftMotor = new WPI_TalonSRX (2),  rearLeftMotor = new WPI_TalonSRX(1), frontRightMotor = new WPI_TalonSRX(3),  rearRightMotor = new WPI_TalonSRX(4);
 	
 	RobotDrive myRobot = new RobotDrive( frontLeftMotor,  rearLeftMotor,  frontRightMotor,  rearRightMotor );
 

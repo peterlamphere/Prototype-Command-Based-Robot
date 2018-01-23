@@ -1,8 +1,11 @@
 package org.usfirst.frc.team6873.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
 
-import org.usfirst.frc.team6873.robot.commands.DriveForward;
+import org.usfirst.frc.team6873.robot.commands.OpenClaw;
+import org.usfirst.frc.team6873.robot.commands.CloseClaw;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -14,8 +17,9 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
+	public Joystick stick = new Joystick(0);
+	public Button button0 = new JoystickButton(stick, 0);
+	public Button button1 = new JoystickButton(stick, 1);
 
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
@@ -27,8 +31,10 @@ public class OI {
 
 	// Start the command when the button is pressed and let it run the command
 	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
+    public OI() {
+		button0.whenPressed(new OpenClaw());
+	    button1.whenPressed(new CloseClaw());
+    }
 	// Run the command while the button is being held down and interrupt it once
 	// the button is released.
 	// button.whileHeld(new ExampleCommand());
