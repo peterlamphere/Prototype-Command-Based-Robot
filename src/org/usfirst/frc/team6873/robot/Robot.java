@@ -10,16 +10,10 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team6873.robot.commands.*;
 
-import org.usfirst.frc.team6873.robot.commands.DriveForward;
-import org.usfirst.frc.team6873.robot.commands.DriveBackward;
-import org.usfirst.frc.team6873.robot.commands.TurnLeft;
-import org.usfirst.frc.team6873.robot.commands.TurnRight;
-import org.usfirst.frc.team6873.robot.commands.Autonomous1Right;
-import org.usfirst.frc.team6873.robot.commands.OpenClaw;
-import org.usfirst.frc.team6873.robot.commands.testClaw;
-import org.usfirst.frc.team6873.robot.subsystems.DriveSystem;
-import org.usfirst.frc.team6873.robot.subsystems.PneumaticsSystem;
+import org.usfirst.frc.team6873.robot.subsystems.*;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +25,7 @@ import org.usfirst.frc.team6873.robot.subsystems.PneumaticsSystem;
 public class Robot extends IterativeRobot {
 
 	public static final DriveSystem driveSubsystem = new DriveSystem();
+	public static final SmallMotorSystem smallMotorSubsystem = new SmallMotorSystem();
 	public static final PneumaticsSystem pnuematicsSubsystem = new PneumaticsSystem();
 	public static OI oi;
 	public static Joystick stick = new Joystick(0);
@@ -48,9 +43,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		driveSubsystem.initGyro();
+		
 		chooser.addDefault("Forward 10 foot", new DriveForward(10));
+		chooser.addDefault("Forward 10 foot with Gyro", new DriveForwardWithGyro(10));
+		chooser.addDefault("Forward 10 foot with Encoder", new DriveForwardWithEncoder(10));
+
 		chooser.addObject("Turn Left 90 degrees", new TurnLeft(90));
-		chooser.addObject("Test Claw", new testClaw());
+		chooser.addObject("Test Claw", new TestClaw());
+		chooser.addObject("Test SmallMotors", new TestSmallMotor());
 		chooser.addObject("Autonomous position 1 (Right)", new Autonomous1Right());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
@@ -114,6 +115,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
 		
 	}
 

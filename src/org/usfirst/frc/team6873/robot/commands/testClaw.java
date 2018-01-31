@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class testClaw extends CommandGroup {
+public class TestClaw extends CommandGroup {
 
-    public testClaw() {
+    public TestClaw() {
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
