@@ -142,9 +142,12 @@ public class DriveSystem extends Subsystem {
     	
     }
 
-    public void forwardwithGyro () {
-	    final double KP = 0.03; // Constant for how fast to driving angle
-	    SmartDashboard.putString("Drive System", "Gyro Going Forwards");
+    public void forwardwithGyro () {     
+    	final double KP = -0.0003; // Constant for how fast to driving angle
+
+
+
+		SmartDashboard.putString("Drive System", "Gyro Going Forwards");
 	    pigeon.getFusedHeading(fusionStatus);
 	    pigeon.getGeneralStatus(genStatus);	
 	    SmartDashboard.putString("Pigeon Error",  genStatus.lastError.name());
