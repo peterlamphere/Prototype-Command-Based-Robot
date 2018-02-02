@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+
+
 import edu.wpi.first.wpilibj.drive.*;
 
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -49,6 +51,13 @@ public class DriveSystem extends Subsystem {
 
 
 	DifferentialDrive myRobot = new DifferentialDrive ( leftMotors,rightMotors);
+	
+	//vars for PID_Gyro_Function
+	int P =1;
+	int I=1;
+	int D = 1;
+    int integral=0;
+	double prev_error = 0;
 	
     // Put methods forthod controlling this subsystem
     // here. Call these from Commands.
@@ -140,34 +149,41 @@ public class DriveSystem extends Subsystem {
 
 		SmartDashboard.putString("Drive System", "Gyro Going Forwards");
 	    pigeon.getFusedHeading(fusionStatus);
-	    pigeon.getGeneralStatus(genStatus);
-		
+	    pigeon.getGeneralStatus(genStatus);	
 	    SmartDashboard.putString("Pigeon Error",  genStatus.lastError.name());
 	    SmartDashboard.putString("Pigeon Booting",  genStatus.bCalIsBooting ? "True" : "False");
 	    SmartDashboard.putString("Pigeon State", genStatus.state.name());
 		
 	    double currentAngle = fusionStatus.heading; 
+	    SmartDashboard.putString("Pigeon State", pigeon.getState().name());
+	    boolean angleIsGood = (pigeon.getState() == PigeonIMU.PigeonState.Ready);
+		double targetAngle=0;
 	
-		SmartDashboard.putString("Pigeon State", pigeon.getState().name());
-				
-		boolean angleIsGood = (pigeon.getState() == PigeonIMU.PigeonState.Ready);
+    	if (angleIsGood) {		
 		
-    	if (angleIsGood) {
-    			arcadeDrive(defaultSpeed, currentAngle*-KP);
-    	}  else {
-				arcadeDrive(defaultSpeed, 0);
-    	}
+		arcadeDrive(defaultSpeed, 0);
+    	}  
+		else {
+			double correct=PID_Gyro_Function(targetAngle,currentAngle);
+			arcadeDrive(defaultSpeed,correct);
+			}
     	
-		SmartDashboard.putNumber("Angle", currentAngle);
-		SmartDashboard.putString("AngleIsGood", (angleIsGood ? "Yes" :"No") );
-        	
-    	
-    	
+	SmartDashboard.putNumber("Angle", currentAngle);
+	SmartDashboard.putString("AngleIsGood", (angleIsGood ? "Yes" :"No") );	
     }
+	
     public void backward() {
 		SmartDashboard.putString("Drive System", "Going Backwards");
     	myRobot.arcadeDrive(-defaultSpeed, 0);
     }
+	public double PID_Gyro_Function(double target,double currentAngleHeading){
+		error = target - currentAngleHeading; // Error = Target - Actual
+        integral += (error*.02); // Integral is increased by the error*time 
+        derivative = (error - prev_error) / .02;
+        correction = P*error + I*integral + D*derivative;//change P, I ,D at the the top 
+		prev_error=error;
+		return correction;
+	}
     public void turnLeft() {
 		SmartDashboard.putString("Drive System", "Turning Left");
     	myRobot.arcadeDrive(defaultSpeed, -1.0);
@@ -183,4 +199,3 @@ public class DriveSystem extends Subsystem {
     }
     
 }
-
