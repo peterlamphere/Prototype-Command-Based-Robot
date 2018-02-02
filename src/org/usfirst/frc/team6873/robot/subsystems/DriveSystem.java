@@ -133,8 +133,8 @@ public class DriveSystem extends Subsystem {
     	
     }
 
-    public void forwardwithGyro () {
-    	final double KP = 0.03; // Constant for how fast to driving angle
+    public void forwardwithGyro () {     
+    	final double KP = -0.0003; // Constant for how fast to driving angle
 
 
 
