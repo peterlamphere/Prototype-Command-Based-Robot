@@ -24,20 +24,20 @@ public class DriveForwardWithEncoder extends Command {
     	Robot.driveSubsystem.initEncoder();
 		SmartDashboard.putString("Command", "Starting Encoder Drive Forward Command");
 		SmartDashboard.putNumber("Feet", feet);
-		Robot.driveSubsystem.forward(feet);  // Call encoder enabled method from Subsystem
-		Timer.delay(2);
+		//Robot.driveSubsystem.forward(feet);  // Call encoder enabled method from Subsystem
+		//Timer.delay(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		SmartDashboard.putString("Command", "Running Encoder Drive Forward Command");
-		//Robot.driveSubsystem.forward();
+		Robot.driveSubsystem.forward();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
-    	//return Robot.driveSubsystem.hasDrivenFarEnough(feet*12);  // Alternate method for using Talon-mounted encoders
+    	//return false;
+    	return Robot.driveSubsystem.hasDrivenFarEnough(feet*12);  // Alternate method for using Talon-mounted encoders
     }
 
     // Called once after isFinished returns true

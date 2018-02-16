@@ -24,13 +24,13 @@ public class Autonomous1Right extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
-    	addSequential (new DriveForward(5));
+    	addSequential (new DriveForwardEncoderGyro(5));
     	addSequential (new TurnRight(90));
-    	addSequential (new DriveForward(6));
+    	addSequential (new DriveForwardEncoderGyro(4));
     	addSequential (new TurnLeft(90));
-    	addSequential (new DriveForward(11));
+    	addSequential (new DriveForwardEncoderGyro(8));
     	addSequential (new TurnLeft(90));
-    	addSequential (new DriveForward(1));
+    	addSequential (new DriveForwardUntilObject(12));
     
     }
 }

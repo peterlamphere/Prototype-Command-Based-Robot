@@ -43,18 +43,24 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		driveSubsystem.initGyro();
 		
 		chooser.addDefault("Forward 10 foot", new DriveForward(10));
-		chooser.addDefault("Forward 10 foot with Gyro", new DriveForwardWithGyro(10));
-		chooser.addDefault("Forward 10 foot with Encoder", new DriveForwardWithEncoder(10));
+		chooser.addObject("Forward To Object in 6 Inches", new DriveForwardUntilObject(6.0));
+		chooser.addObject("Backward 10 foot", new DriveBackward(10));
+		chooser.addObject("Forward 10 foot with Gyro", new DriveForwardWithGyro(10));
+		chooser.addObject("Forward 10 foot with Encoder", new DriveForwardWithEncoder(10));
 
 		chooser.addObject("Turn Left 90 degrees", new TurnLeft(90));
-		chooser.addObject("Test Claw", new TestClaw());
+		chooser.addObject("Turn Right 90 degrees", new TurnRight(90));
+		//chooser.addObject("Test Claw", new TestClaw());
 		chooser.addObject("Test SmallMotors", new TestSmallMotor());
 		chooser.addObject("Autonomous position 1 (Right)", new Autonomous1Right());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		chooser.addObject("Autonomous position 1 (Left)", new Autonomous1Left());
+		// chooser.addObject("My Auto", new MyAutoCommand());
+		SmartDashboard.putData("Auto mode", chooser);
+	
 	}
 
 	/**

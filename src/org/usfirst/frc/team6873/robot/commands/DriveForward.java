@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveForward extends Command {
 	Timer timer = new Timer();
 	double time = 0;
+	static double rampUpTime = 0.5;
 	
     public DriveForward(double _feet) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);\
     	requires(Robot.driveSubsystem);
     	time = _feet/Robot.driveSubsystem.getfeetPerSecond();
-    	
     }
 
     // Called just before this Command runs the first time
@@ -33,7 +33,12 @@ public class DriveForward extends Command {
     protected void execute() {
 		SmartDashboard.putString("Command", "Running Drive Forward Command");
 		SmartDashboard.putNumber("Timer", timer.get());
-    	Robot.driveSubsystem.forward();
+		if (timer.get() < rampUpTime)
+			Robot.driveSubsystem.forwardPartialPower(timer.get()/rampUpTime);
+		else
+			Robot.driveSubsystem.forward();
+
+			
     }
 
     // Make this return true when this Command no longer needs to run execute()
