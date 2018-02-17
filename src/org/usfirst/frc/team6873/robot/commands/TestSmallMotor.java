@@ -15,7 +15,7 @@ public class TestSmallMotor extends Command {
     public TestSmallMotor() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.smallMotorSubsystem);
+    	//requires(Robot.smallMotorSubsystem);
 
     }
 
@@ -30,7 +30,7 @@ public class TestSmallMotor extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		SmartDashboard.putNumber("Timer", timer.get());	
-
+/*
     	if (((int) timer.get() % 6) < 3) {
     		SmartDashboard.putString("Small Motor", "Running Forward Small Motor Test Command");
         	Robot.smallMotorSubsystem.forward();
@@ -40,7 +40,7 @@ public class TestSmallMotor extends Command {
         	Robot.smallMotorSubsystem.backward();
     	}	
 
-
+*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -52,7 +52,7 @@ public class TestSmallMotor extends Command {
     protected void end() {
        		timer.stop();
     		SmartDashboard.putString("Small Motor", "Stopping Drive Forward Command");
-        	Robot.smallMotorSubsystem.stop();
+ //       	Robot.smallMotorSubsystem.stop();
 
     }
 
@@ -61,4 +61,5 @@ public class TestSmallMotor extends Command {
     protected void interrupted() {
     	
     }
+    
 }

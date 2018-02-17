@@ -12,12 +12,14 @@ public class CloseClaw extends Command {
 
     public CloseClaw() {
     	requires(Robot.pnuematicsSubsystem);	
-        // Use requires() here to declare subsystem dependencies
+    	requires(Robot.clawSubsystem);
+    	// Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     	SmartDashboard.putString("Close", "Starting Close Claw Command");
     	Robot.pnuematicsSubsystem.closeClaw();
     }
@@ -25,6 +27,7 @@ public class CloseClaw extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putString("Close", "Running Close Claw Command");
+		 
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -33,8 +36,7 @@ public class CloseClaw extends Command {
     }
 
     // Called once after isFinished returns true
-    protected void end() {
-    	SmartDashboard.putString("Close", "Ending Close Claw Command");
+    protected void end() {	
 
     }
 

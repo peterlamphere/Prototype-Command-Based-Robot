@@ -29,7 +29,7 @@ public class DriveSystem extends Subsystem {
 		static final double kI = 0.0;
 		static final double kD = 0.0;
 	}
-	final double pulsesPerRotation = 360*4; // We are using the US Digital E4T-360-250 to calculate PPR
+	final double pulsesPerRotation = 360; // We are using the US Digital E4T-360-250 to calculate PPR
 	final int defaultTimeout = 10; // How long to wait before sensor method calls give up
 	
 	int startingPosition = 0;
@@ -58,7 +58,7 @@ public class DriveSystem extends Subsystem {
     PigeonIMU.GeneralStatus genStatus = new PigeonIMU.GeneralStatus();
 
     Ultrasonic ultraLeft; //trigger channel 0, echo channel 1
-    Ultrasonic ultraRight; //trigger channel 0, echo channel 1
+    Ultrasonic ultraRight; //trigger channel 2, echo channel 3
     DifferentialDrive myRobot = new DifferentialDrive ( leftMotors,rightMotors);
 	
 
@@ -95,7 +95,7 @@ public class DriveSystem extends Subsystem {
     	
     	encoderTalonLeft = frontLeftMotor;
     	encoderTalonRight = frontRightMotor;
-    	startingPosition = encoderTalonRight.getSensorCollection().getQuadraturePosition();
+    	startingPosition = encoderTalonLeft.getSensorCollection().getQuadraturePosition();
 
     	
     	rearLeftMotor.set(ControlMode.Follower, 3);// This will make the rear left motor move exactly like the front left motor
@@ -150,16 +150,16 @@ public class DriveSystem extends Subsystem {
 			startingAngle = fusionStatus.heading;
 
     	
-	    startingAngle = getHeadingAngle();
+	    //startingAngle = getHeadingAngle();
 	    SmartDashboard.putString("Finished Pigeon Init", genStatus.state.name());
 
     }
     
     public boolean hasDrivenFarEnough(double distance_in_inches) { 
-    	if (encoderTalonRight != null) {
-    		double currentPosition = encoderTalonRight.getSensorCollection().getQuadraturePosition() - startingPosition;
+    	if (encoderTalonLeft != null) {
+    		double currentPosition = -(encoderTalonLeft.getSensorCollection().getQuadraturePosition() - startingPosition) ;
     	
-    	int targetPulseCount = (int) ( (distance_in_inches / circumferenceInInches) * pulsesPerRotation);
+    	int targetPulseCount = (int) (1.4* (distance_in_inches / circumferenceInInches) * pulsesPerRotation);
 	    	SmartDashboard.putNumber("Current Position ", currentPosition);
 	    	SmartDashboard.putNumber("Starting Position ", startingPosition);
 	    	SmartDashboard.putNumber("Target position", targetPulseCount);
@@ -262,7 +262,10 @@ public class DriveSystem extends Subsystem {
  
     }
     
-    public void forwardwithGyro () {     
+    public void forwardwithGyro () {
+    	forwardwithGyro (defaultSpeed);
+    }
+    public void forwardwithGyro (double speed) {     
     	final double KP = -0.0003; // Constant for how fast to driving angle
     	double currentAngle = 0.0;
     	boolean pigeonIsGood = true;
@@ -282,13 +285,13 @@ public class DriveSystem extends Subsystem {
     	
     	if (!pigeonIsGood) {		
 		
-    		arcadeDrive(defaultSpeed, 0);
+    		arcadeDrive(speed, 0);
     	}  
 		else {
 			double correction=PID_Gyro_Function(startingAngle,currentAngle); // What is the correction to get the current angle closer to the starting angle
 			SmartDashboard.putNumber("Correction", correction);
 			
-			tankDrive(defaultSpeed - 0.3 * (correction / 90),defaultSpeed + 0.5 * (correction / 90));
+			tankDrive(speed - 0.3 * (correction / 90),speed + 0.5 * (correction / 90));
 		}
     	
 	SmartDashboard.putNumber("Current Angle", currentAngle);

@@ -19,11 +19,11 @@ public class SmallMotorSystem extends Subsystem {
     }
     public void forward() {
 		SmartDashboard.putString("Small System", "Going Forwards");
-    	controller.set(0.5);
+    	controller.set(1.0);
     	
     }
     public void backward() {
-    	controller.set(-0.5); 		SmartDashboard.putString("Small System", "Going backward");
+    	controller.set(-1.0); 		SmartDashboard.putString("Small System", "Going backward");
     	
     	
     }

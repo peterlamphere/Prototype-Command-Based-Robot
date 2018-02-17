@@ -25,11 +25,14 @@ import org.usfirst.frc.team6873.robot.subsystems.*;
 public class Robot extends IterativeRobot {
 
 	public static final DriveSystem driveSubsystem = new DriveSystem();
-	public static final SmallMotorSystem smallMotorSubsystem = new SmallMotorSystem();
+	//public static final SmallMotorSystem smallMotorSubsystem = new SmallMotorSystem();
 	public static final PneumaticsSystem pnuematicsSubsystem = new PneumaticsSystem();
+	public static final ElevatorSystem elevatorSubsystem = new ElevatorSystem();
+	public static final ClawSystem clawSubsystem = new ClawSystem();
+	public static final WinchSystem winchSubsystem = new WinchSystem();
 	public static OI oi;
 	public static Joystick stick = new Joystick(0);
-
+	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -53,7 +56,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Turn Left 90 degrees", new TurnLeft(90));
 		chooser.addObject("Turn Right 90 degrees", new TurnRight(90));
 		//chooser.addObject("Test Claw", new TestClaw());
-		chooser.addObject("Test SmallMotors", new TestSmallMotor());
+		//chooser.addObject("Test SmallMotors", new TestSmallMotor());
 		chooser.addObject("Autonomous position 1 (Right)", new Autonomous1Right());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);

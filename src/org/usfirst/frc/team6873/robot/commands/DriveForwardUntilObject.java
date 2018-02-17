@@ -17,12 +17,13 @@ public class DriveForwardUntilObject extends Command {
 		double inchestoTarget = 0;
 		double tolerance = 0;
 		final static double tolerancePercent = 5.0/100.0;
+		final static double ultrasonicOffset = 19.0; // How far back are the sensors from the front of the robot?
 		
 	    public DriveForwardUntilObject (double _inches) {
 	        // Use requires() here to declare subsystem dependencies
 	        // eg. requires(chassis);\
 	    	requires(Robot.driveSubsystem);
-	    	 inchestoTarget = _inches;
+	    	 inchestoTarget = _inches + ultrasonicOffset;
 	    	 tolerance = tolerancePercent*inchestoTarget;
 	    	 Robot.driveSubsystem.initUltrasonic();
 	    

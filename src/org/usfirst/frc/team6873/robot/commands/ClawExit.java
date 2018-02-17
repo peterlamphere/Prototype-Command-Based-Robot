@@ -8,38 +8,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class OpenClaw extends Command {
+public class ClawExit extends Command {
 
-    public OpenClaw() {
-    	requires(Robot.pnuematicsSubsystem);
-    	requires(Robot.clawSubsystem);
+    public ClawExit() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	SmartDashboard.putString("Command", "Starting OpenClaw  Command");
+    	SmartDashboard.putString("Command", "Starting ClawExit Command");
+    	Robot.clawSubsystem.initDefaultCommand();
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {		
-    	Robot.pnuematicsSubsystem.openClaw();
-    	SmartDashboard.putString("Open", "Starting Open Claw Command");
+    protected void initialize() {
+     	SmartDashboard.putString("Command", "Executing ClawExit Command");
+     	Robot.clawSubsystem.backward();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		SmartDashboard.putString("Open", "Running Open Claw Command");
-		
-
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
-    protected void end() {		
-    	
-}
+    protected void end() {
+    	SmartDashboard.putString("Close", "Ending Exit Claw Command");
+    	Robot.clawSubsystem.stop();
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
