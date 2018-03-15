@@ -13,6 +13,8 @@ public class TurnRight extends Command {
 	Timer timer = new Timer();
 	double targetAngle = 0.0;
 	double time = 0.5;	
+	double tolerance = 0.5; // Half a degree tolerance
+
 	
     public TurnRight(double _degrees) {
         // Use requires() here to declare subsystem dependencies
@@ -37,13 +39,15 @@ public class TurnRight extends Command {
 		double percentOfTurn = Math.abs(Robot.driveSubsystem.getHeadingAngle() / targetAngle);
 		SmartDashboard.putNumber("Percent of Turn", percentOfTurn);
 
-		if (percentOfTurn > 0.6) {
-			if (percentOfTurn < 1.0) {
-				double power = 1.00 / (0.60-1.0) * (percentOfTurn - 1.00);
-				Robot.driveSubsystem.turnRight(power);
-			} else Robot.driveSubsystem.stop();
-		} else Robot.driveSubsystem.turnRight();
-    
+		
+		Robot.driveSubsystem.turnRight();
+		if (percentOfTurn > 0.75) {
+			Robot.driveSubsystem.turnRight(Robot.driveSubsystem.slowSpeed);
+		} else if (percentOfTurn > 1.0) {
+			Robot.driveSubsystem.turnLeft(Robot.driveSubsystem.slowSpeed);
+		} else {	
+			Robot.driveSubsystem.turnRight(Robot.driveSubsystem.fastSpeed);
+		}
     	//timer.reset();
     	//timer.start();
     }
@@ -57,7 +61,7 @@ public class TurnRight extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.driveSubsystem.getHeadingAngle() < targetAngle);
+    	return ( Math.abs(Robot.driveSubsystem.getHeadingAngle() - targetAngle) < tolerance );
     }
 
     // Called once after isFinished returns true

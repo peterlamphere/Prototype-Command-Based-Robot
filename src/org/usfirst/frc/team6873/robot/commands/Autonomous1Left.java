@@ -24,9 +24,9 @@ public class Autonomous1Left extends CommandGroup {
 
 	    	addSequential (new DriveForwardEncoderGyro(5));
 	    	addSequential (new TurnLeft(90));
-	    	addSequential (new DriveForwardEncoderGyro(12));
+	    	addSequential (new DriveForwardEncoderGyro(17));
 	    	addSequential (new TurnRight(90));
-	    	addSequential (new DriveForwardEncoderGyro(8));
+	    	addSequential (new DriveForwardEncoderGyro(4));
 	    	addSequential (new TurnRight(90));
 	    	addSequential (new DriveForwardUntilObject(6));
 	    

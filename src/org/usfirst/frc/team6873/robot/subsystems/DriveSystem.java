@@ -29,6 +29,8 @@ public class DriveSystem extends Subsystem {
 		static final double kI = 0.0;
 		static final double kD = 0.0;
 	}
+	public final double slowSpeed = 0.7; public final double fastSpeed = 0.85;
+
 	final double pulsesPerRotation = 360; // We are using the US Digital E4T-360-250 to calculate PPR
 	final int defaultTimeout = 10; // How long to wait before sensor method calls give up
 	
@@ -95,7 +97,6 @@ public class DriveSystem extends Subsystem {
     	
     	encoderTalonLeft = frontLeftMotor;
     	encoderTalonRight = frontRightMotor;
-    	startingPosition = encoderTalonLeft.getSensorCollection().getQuadraturePosition();
 
     	
     	rearLeftMotor.set(ControlMode.Follower, 3);// This will make the rear left motor move exactly like the front left motor
@@ -112,9 +113,11 @@ public class DriveSystem extends Subsystem {
 //    	encoderTalonRight.config_kD(0, PID.kD,defaultTimeout); 
     	encoderTalonLeft.setSelectedSensorPosition(0, 0, defaultTimeout);
 
+    	startingPosition = -encoderTalonLeft.getSensorCollection().getQuadraturePosition();
+
     }
     
-    public boolean encoderEnabled() {
+    public boolean encoderEnabled() {	
     	return (encoderTalonRight != null); // to be implemented.
     }
     public void forward(double distance) {
@@ -157,9 +160,9 @@ public class DriveSystem extends Subsystem {
     
     public boolean hasDrivenFarEnough(double distance_in_inches) { 
     	if (encoderTalonLeft != null) {
-    		double currentPosition = -(encoderTalonLeft.getSensorCollection().getQuadraturePosition() - startingPosition) ;
+    		double currentPosition = -encoderTalonLeft.getSensorCollection().getQuadraturePosition() - startingPosition ;
     	
-    	int targetPulseCount = (int) (1.4* (distance_in_inches / circumferenceInInches) * pulsesPerRotation);
+    		int targetPulseCount = (int) ((distance_in_inches / circumferenceInInches) * pulsesPerRotation);
 	    	SmartDashboard.putNumber("Current Position ", currentPosition);
 	    	SmartDashboard.putNumber("Starting Position ", startingPosition);
 	    	SmartDashboard.putNumber("Target position", targetPulseCount);
@@ -328,7 +331,7 @@ public class DriveSystem extends Subsystem {
     
     public void turnLeft(double power) {
 		SmartDashboard.putString("Drive System", "Turning Left");
-		power = Math.max(0.5, power);
+		power = Math.max(0.55, power);
 		SmartDashboard.putNumber("Turning Power", power);
     	myRobot.tankDrive(-defaultTurnSpeed*power,defaultTurnSpeed*power);
     }
@@ -341,7 +344,7 @@ public class DriveSystem extends Subsystem {
     
     public void turnRight(double power) {
 		SmartDashboard.putString("Drive System", "Turning Right");
-		power = Math.max(0.5, power);
+		power = Math.max(0.55, power);
 		SmartDashboard.putNumber("Turning Power", power);
 		
     	myRobot.tankDrive(defaultTurnSpeed*power,-defaultTurnSpeed*power);

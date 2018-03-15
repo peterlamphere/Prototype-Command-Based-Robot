@@ -13,7 +13,7 @@ public class TurnLeft extends Command {
 	Timer timer = new Timer();
 	double targetAngle = 0.0;
 	double tolerance = 0.5; // Half a degree tolerance
-	
+
     public TurnLeft(double _degrees) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);\
@@ -31,22 +31,24 @@ public class TurnLeft extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
 		SmartDashboard.putString("Command", "Running Drive TurnLeft Command");
 		SmartDashboard.putNumber("Target Angle", targetAngle);
 		double percentOfTurn = Robot.driveSubsystem.getHeadingAngle() / targetAngle;
 		SmartDashboard.putNumber("Percent of Turn", percentOfTurn);
 
-		if (percentOfTurn > 0.60) {
-			if (percentOfTurn < 1.0) {
-				double power = 1.00 / (0.60-1.0) * (percentOfTurn - 1.00);
-				Robot.driveSubsystem.turnLeft(power);
-			} else Robot.driveSubsystem.stop();
-		} else Robot.driveSubsystem.turnLeft();
+		if (percentOfTurn > 0.75) {
+			Robot.driveSubsystem.turnLeft(Robot.driveSubsystem.slowSpeed);
+		} else if (percentOfTurn > 1.0) {
+			Robot.driveSubsystem.turnRight(Robot.driveSubsystem.slowSpeed);
+		} else {	
+			Robot.driveSubsystem.turnLeft(Robot.driveSubsystem.fastSpeed);
+		}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return (Robot.driveSubsystem.getHeadingAngle() > targetAngle);
+    	return ( Math.abs(Robot.driveSubsystem.getHeadingAngle() - targetAngle) < tolerance );
     }
 
     // Called once after isFinished returns true

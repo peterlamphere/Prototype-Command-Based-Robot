@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Turn Left 90 degrees", new TurnLeft(90));
 		chooser.addObject("Turn Right 90 degrees", new TurnRight(90));
 		//chooser.addObject("Test Claw", new TestClaw());
-		//chooser.addObject("Test SmallMotors", new TestSmallMotor());
+		chooser.addObject("Test SmallMotors", new TestSmallMotor());
 		chooser.addObject("Autonomous position 1 (Right)", new Autonomous1Right());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);

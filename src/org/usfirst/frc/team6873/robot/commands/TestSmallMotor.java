@@ -5,6 +5,7 @@ import org.usfirst.frc.team6873.robot.Robot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team6873.robot.subsystems.ElevatorSystem;
 
 /**
  *
@@ -15,7 +16,7 @@ public class TestSmallMotor extends Command {
     public TestSmallMotor() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//requires(Robot.smallMotorSubsystem);
+    	requires(Robot.elevatorSubsystem);
 
     }
 
@@ -30,6 +31,8 @@ public class TestSmallMotor extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 		SmartDashboard.putNumber("Timer", timer.get());	
+		
+		Robot.elevatorSubsystem.backward();
 /*
     	if (((int) timer.get() % 6) < 3) {
     		SmartDashboard.putString("Small Motor", "Running Forward Small Motor Test Command");
@@ -45,7 +48,7 @@ public class TestSmallMotor extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return timer.get() < 0.1;
     }
 
     // Called once after isFinished returns true
